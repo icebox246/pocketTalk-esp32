@@ -21,7 +21,7 @@ Simple chatting server for offgrid and semi-anonymous use running on ESP32.
 
 2. In any modern web browser go to 192.168.4.1
 
-3. Fill out your information at the bottom of the page and send your images by typing them into the messagebox and pressing
+3. Fill out your information at the bottom of the page and send your messages by typing them into the messagebox and pressing
 `ENTER` or "SEND" button
 
 ## Have fun chatting!
