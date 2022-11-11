@@ -1,12 +1,13 @@
 // simple chat server for off-grid low distance communication
 
 #include <DNSServer.h>
+#include <SPIFFS.h>
 #include <WebServer.h>
 #include <WiFi.h>
 
 // Set you Acces Point parameters here
 const char* ssid = "pocketTalk";
-const char* password = "........";
+const char* password = "archlinuxFTW";
 
 #define MAX_MESS_NUM 100
 
@@ -31,10 +32,33 @@ void addMessage(String nick, String color, String text) {
     currentTail = (currentTail + 1) % MAX_MESS_NUM;
 }
 
+String readWholeTextFile(const char* name) {
+    String buff = "";
+
+    File file = SPIFFS.open(name);
+
+    if (!file || file.isDirectory()) {
+        Serial.println("SPIFFS - failed to open file for reading");
+        return "";
+    }
+
+    while (file.available()) {
+        buff += (char)file.read();
+    }
+    file.close();
+
+    return buff;
+}
+
 void setup() {
     // Setting up serial for debugging
     Serial.begin(9600);
     Serial.println("");
+
+    // Setting up SPIFFS
+    if (!SPIFFS.begin(true)) {
+        Serial.println("An Error has occurred while mounting SPIFFS");
+    }
 
     // Setting up acces point
     WiFi.mode(WIFI_AP);
